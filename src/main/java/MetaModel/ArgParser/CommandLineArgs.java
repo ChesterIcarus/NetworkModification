@@ -1,4 +1,4 @@
-package ArgParser;
+package MetaModel.ArgParser;
 
 import com.beust.jcommander.Parameter;
 
