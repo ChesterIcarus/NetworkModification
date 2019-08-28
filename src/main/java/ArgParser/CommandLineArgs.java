@@ -21,18 +21,18 @@ public class CommandLineArgs {
 
     @Parameter(names = {"--network", "-NET"},
             description = "Path to network input file",
-            required = true)
+            required = false)
     public String NETWORK = null;
 
     @Parameter(names = {"--global-threads", "-GT"},
             description = "Number of global threads to assign",
             required = false)
-    public String GLOBALTHREADS = "4";
+    public String GLOBALTHREADS = "70";
 
     @Parameter(names = {"--qsim-threads", "-QT"},
             description = "Number of Qsim threads to assign",
             required = false)
-    public String QSIMTHREADS = "4";
+    public String QSIMTHREADS = "60";
 
     @Parameter(names = {"--csv-event-input", "-CSV"},
             description = "Path to CSV file with the unformatted change events to be parsed",

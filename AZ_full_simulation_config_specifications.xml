@@ -1,0 +1,45 @@
+<config>
+    <global>
+        <crs>EPSG:2223</crs>
+        <threads process="simulation">6</threads>
+        <threads process="planning">2</threads>
+    </global>
+    <activities>
+        <activity>home</activity>
+        <activity>work</activity>
+        <activity>university</activity>
+        <activity>school</activity>
+        <activity>pure_escort</activity>
+        <activity>rideshare</activity>
+        <activity>other_escort</activity>
+        <activity>shopping</activity>
+        <activity>other_maintenence</activity>
+        <activity>ride_share</activity>
+        <activity>food</activity>
+        <activity>breakfast</activity>
+        <activity>lunch</activity>
+        <activity>dinner</activity>
+        <activity>visiting</activity>
+        <activity>other_discretionary</activity>
+        <activity>special_event</activity>
+        <activity>work_related</activity>
+    </activities>
+    <modes>
+        <primary>
+            <mode>sov</mode>
+            <mode>hov2_driver</mode>
+            <mode>hov3_driver</mode>
+            <mode>hov_passenger</mode>
+            <mode>taxi</mode>
+        </primary>
+        <secondary>
+            <mode>conv_transit_walk_access</mode>
+            <mode>conv_transit_knr</mode>
+            <mode>conv_transit_pnr</mode>
+            <mode>prem_transit_walk_access</mode>
+            <mode>prem_transit_knr</mode>
+            <mode>prem_transit_pnr</mode>
+            <mode>school_bus</mode>
+        </secondary>
+    </modes>
+</config>
