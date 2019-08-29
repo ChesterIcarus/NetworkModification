@@ -1,0 +1,50 @@
+<model>
+    <inputdata>
+        <plans path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/plans/SWUS_Plans_FINAL.xml"/>
+        <network
+                path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/networks/SWUSFULLFINAL_NET.xml"/>
+        <config path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/scenarios/scenario_1a/SWUSFINAL_Config_Scenario1a.xml"/>
+        <events path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/scenarios/scenario_1a/Disruption Inputs_Scenario1a.csv"/>
+    </inputdata>
+    <global>
+        <crs>EPSG:2223</crs>
+        <threads process="simulation">6</threads>
+        <threads process="planning">2</threads>
+    </global>
+    <params>
+        <activities>
+            <activity type="home"></activity>
+            <activity type="work"></activity>
+            <activity type="university"></activity>
+            <activity type="school"></activity>
+            <activity type="pure_escort"></activity>
+            <activity type="rideshare"></activity>
+            <activity type="other_escort"></activity>
+            <activity type="shopping"></activity>
+            <activity type="other_maintenence"></activity>
+            <activity type="ride_share"></activity>
+            <activity type="food"></activity>
+            <activity type="breakfast"></activity>
+            <activity type="lunch"></activity>
+            <activity type="dinner"></activity>
+            <activity type="visiting"></activity>
+            <activity type="other_discretionary"></activity>
+            <activity type="special_event"></activity>
+            <activity type="work_related"></activity>
+        </activities>
+        <modes>
+            <mode type="sov"></mode>
+            <mode type="hov2_driver"></mode>
+            <mode type="hov3_driver"></mode>
+            <mode type="hov_passenger"></mode>
+            <mode type="taxi"></mode>
+            <mode type="conv_transit_walk_access"></mode>
+            <mode type="conv_transit_knr"></mode>
+            <mode type="conv_transit_pnr"></mode>
+            <mode type="prem_transit_walk_access"></mode>
+            <mode type="prem_transit_knr"></mode>
+            <mode type="prem_transit_pnr"></mode>
+            <mode type="school_bus"></mode>
+        </modes>
+    </params>
+</model>
