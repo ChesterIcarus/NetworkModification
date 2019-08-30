@@ -2,6 +2,7 @@ package InMemoryMatsim;
 
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
+import org.matsim.core.config.groups.PlanCalcScoreConfigGroup;
 import org.matsim.core.controler.OutputDirectoryHierarchy;
 
 public class IMConfigUtils {
@@ -14,14 +15,14 @@ public class IMConfigUtils {
      * @param filepath
      */
     public static void austinWrapperRunner(Config config, String filepath){
-        getCleanConfigFromFile(config, filepath);
-        defineTripCharacteristics(config);
+        loadCleanConfigFromFile(config, filepath);
+        definePlanParameters(config);
         // TODO: See if it's actually okay to remove activity scoring at this point
         ConfigScoringUtils.removeActivityScoring(config);
         setOverwriteFileSetting(config, OutputDirectoryHierarchy.OverwriteFileSetting.deleteDirectoryIfExists);
     }
 
-    public static void getCleanConfigFromFile(Config config, String filepath){
+    public static void loadCleanConfigFromFile(Config config, String filepath){
         config = ConfigUtils.loadConfig(filepath);
         config.network().setInputFile("null");
         config.network().setTimeVariantNetwork(true);
@@ -29,7 +30,16 @@ public class IMConfigUtils {
         config.plans().setInputFile("null");
     }
 
-    public static void defineTripCharacteristics(Config config, String[] modes, String[] activityTypes){
+    public static Config createCleanConfigFromFile(String filepath){
+        Config config = ConfigUtils.loadConfig(filepath);
+        config.network().setInputFile("null");
+        config.network().setTimeVariantNetwork(true);
+        config.network().setChangeEventsInputFile("null");
+        config.plans().setInputFile("null");
+        return config;
+    }
+
+    public static void definePlanParameters(Config config, String[] modes, String[] activityTypes){
         for (String mode : modes) {
             ConfigScoringUtils.addMode(config, mode);
         }
@@ -38,10 +48,10 @@ public class IMConfigUtils {
         }
     }
 
-    public static void defineTripCharacteristics(Config config){
+    public static void definePlanParameters(Config config){
         final String[] modes = {"car", "bike", "pt"};
         final String[] activityTypes = {"w", "h", "s", "work", "home", "shopping"};
-        defineTripCharacteristics(config, modes, activityTypes);
+        definePlanParameters(config, modes, activityTypes);
     }
 
     public static void setOverwriteFileSetting(Config config, OutputDirectoryHierarchy.OverwriteFileSetting setting){

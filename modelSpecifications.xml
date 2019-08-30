@@ -1,50 +1,113 @@
 <model>
-    <inputdata>
-        <plans path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/plans/SWUS_Plans_FINAL.xml"/>
-        <network
-                path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/networks/SWUSFULLFINAL_NET.xml"/>
-        <config path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/scenarios/scenario_1a/SWUSFINAL_Config_Scenario1a.xml"/>
-        <events path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/scenarios/scenario_1a/Disruption Inputs_Scenario1a.csv"/>
-    </inputdata>
-    <global>
-        <crs>EPSG:2223</crs>
-        <threads process="simulation">6</threads>
-        <threads process="planning">2</threads>
-    </global>
-    <params>
+    <plans path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/plans/SWUS_Plans_FINAL.xml"/>
+    <network
+            path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/networks/SWUSFULLFINAL_NET.xml"/>
+    <config path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/scenarios/scenario_1a/SWUSFINAL_Config_Scenario1a.xml"/>
+    <events path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/scenarios/scenario_1a/Disruption Inputs_Scenario1a.csv"/>
+    <setup>
+        <global>
+            <timeVariant value="true"/>
+            <scoringActs value="false"/>
+        </global>
+        <threads>
+            <simulation value="6"/>
+            <planning value="2"/>
+        </threads>
+    </setup>
+    <planParameters>
         <activities>
-            <activity type="home"></activity>
-            <activity type="work"></activity>
-            <activity type="university"></activity>
-            <activity type="school"></activity>
-            <activity type="pure_escort"></activity>
-            <activity type="rideshare"></activity>
-            <activity type="other_escort"></activity>
-            <activity type="shopping"></activity>
-            <activity type="other_maintenence"></activity>
-            <activity type="ride_share"></activity>
-            <activity type="food"></activity>
-            <activity type="breakfast"></activity>
-            <activity type="lunch"></activity>
-            <activity type="dinner"></activity>
-            <activity type="visiting"></activity>
-            <activity type="other_discretionary"></activity>
-            <activity type="special_event"></activity>
-            <activity type="work_related"></activity>
+            <activity>
+                <type value="home"/>
+            </activity>
+            <activity>
+                <type value="work"/>
+            </activity>
+            <activity>
+                <type value="university"/>
+            </activity>
+            <activity>
+                <type value="school"/>
+            </activity>
+            <activity>
+                <type value="pure_escort"/>
+            </activity>
+            <activity>
+                <type value="rideshare"/>
+            </activity>
+            <activity>
+                <type value="other_escort"/>
+            </activity>
+            <activity>
+                <type value="shopping"/>
+            </activity>
+            <activity>
+                <type value="other_maintenence"/>
+            </activity>
+            <activity>
+                <type value="ride_share"/>
+            </activity>
+            <activity>
+                <type value="food"/>
+            </activity>
+            <activity>
+                <type value="breakfast"/>
+            </activity>
+            <activity>
+                <type value="lunch"/>
+            </activity>
+            <activity>
+                <type value="dinner"/>
+            </activity>
+            <activity>
+                <type value="visiting"/>
+            </activity>
+            <activity>
+                <type value="other_discretionary"/>
+            </activity>
+            <activity>
+                <type value="special_event"/>
+            </activity>
+            <activity>
+                <type value="work_related"/>
+            </activity>
         </activities>
         <modes>
-            <mode type="sov"></mode>
-            <mode type="hov2_driver"></mode>
-            <mode type="hov3_driver"></mode>
-            <mode type="hov_passenger"></mode>
-            <mode type="taxi"></mode>
-            <mode type="conv_transit_walk_access"></mode>
-            <mode type="conv_transit_knr"></mode>
-            <mode type="conv_transit_pnr"></mode>
-            <mode type="prem_transit_walk_access"></mode>
-            <mode type="prem_transit_knr"></mode>
-            <mode type="prem_transit_pnr"></mode>
-            <mode type="school_bus"></mode>
+            <mode>
+                <type value="sov"/>
+            </mode>
+            <mode>
+                <type value="hov2_driver"/>
+            </mode>
+            <mode>
+                <type value="hov3_driver"/>
+            </mode>
+            <mode>
+                <type value="hov_passenger"/>
+            </mode>
+            <mode>
+                <type value="taxi"/>
+            </mode>
+            <mode>
+                <type value="conv_transit_walk_access"/>
+            </mode>
+            <mode>
+                <type value="conv_transit_knr"/>
+            </mode>
+            <mode>
+                <type value="conv_transit_pnr"/>
+            </mode>
+            <mode>
+                <type value="prem_transit_walk_access"/>
+            </mode>
+            <mode>
+                <type value="prem_transit_knr"/>
+            </mode>
+            <mode>
+                <type value="prem_transit_pnr"/>
+            </mode>
+            <mode>
+                <type value="school_bus"/>
+            </mode>
         </modes>
-    </params>
+    </planParameters>
 </model>

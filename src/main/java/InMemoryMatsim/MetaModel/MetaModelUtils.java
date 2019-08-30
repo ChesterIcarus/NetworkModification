@@ -1,4 +1,4 @@
-package MetaModel;
+package InMemoryMatsim.MetaModel;
 
 import java.io.IOException;
 import java.nio.file.Files;

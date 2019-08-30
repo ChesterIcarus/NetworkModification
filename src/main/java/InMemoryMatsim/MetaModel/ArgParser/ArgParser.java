@@ -1,4 +1,4 @@
-package MetaModel.ArgParser;
+package InMemoryMatsim.MetaModel.ArgParser;
 
 import org.matsim.api.core.v01.network.Network;
 import org.matsim.core.config.Config;
