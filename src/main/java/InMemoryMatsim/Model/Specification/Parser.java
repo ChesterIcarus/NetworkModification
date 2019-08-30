@@ -37,4 +37,9 @@ public class Parser {
         }
         return children;
     }
+
+    static String getClassName(Class classObj){
+        return classObj.getName().toLowerCase().split("\\.")[
+                classObj.getName().toLowerCase().split("\\.").length - 1];
+    }
 }

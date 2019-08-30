@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 public class SetupParser extends Parser {
-    public static Setup getSetupParams(){
+    public static Setup getSetup(){
         return new Setup();
     }
 }

@@ -5,8 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Threads extends Parameters {
-    public String simulation;
-    public String planning;
+    public static final Class parser = ThreadsParser.class;
+    public int simulation;
+    public int planning;
 
     public Threads(){
         super();

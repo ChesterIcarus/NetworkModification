@@ -22,10 +22,11 @@ public class Parameters {
     }
 
 
-    public static String[] getStringFieldNames(Field[] fields){
+    public static String[] getPrimitiveFieldNames(Field[] fields){
         List<String> names = new ArrayList<>();
         for (Field field : fields){
-            if (field.getType() == String.class){
+            if (field.getType() == String.class || field.getType() == boolean.class ||
+                field.getType() == int.class || field.getType() == float.class){
                 names.add(field.getName());
             }
         }
@@ -36,28 +37,28 @@ public class Parameters {
         for (String key : params.keySet()){
             try {
                 Field field = object.getClass().getDeclaredField(key);
-                if (field.getType() == String.class)
+                if (params.get(key) == "" || params.get(key) == "null" || params.get(key) == null)
+                    continue;
+                else if (field.getType() == String.class)
                     field.set(object, params.get(key));
-                if (field.getType() == int.class)
+                else if (field.getType() == int.class)
                     field.set(object, Integer.valueOf((String) params.get(key)));
-                if (field.getType() == float.class)
-                    field.set(object, Double.valueOf((String) params.get(key)));
-                if (field.getType() == boolean.class)
+                else if (field.getType() == float.class)
+                    field.set(object, Float.valueOf((String) params.get(key)));
+                else if (field.getType() == boolean.class)
                     field.set(object, Boolean.valueOf((String) params.get(key)));
                 else
                     field.set(object, params.get(key));
             }
             catch (IllegalAccessException | NoSuchFieldException e) {
-                throw new InstantiationError(e.toString());
+                e.printStackTrace();
+                throw new InstantiationError();
             }
         }
     }
 
     private static void validateInputParams(Object object, Map<String, ?> params){
-        if (!params.values().stream().sequential().allMatch(new HashSet<>()::add))
-            throw new InstantiationError(
-                    "Duplicate values for single key in input parameters.");
-        List<String> fieldNames = Arrays.asList(getStringFieldNames(
+        List<String> fieldNames = Arrays.asList(getPrimitiveFieldNames(
                 object.getClass().getDeclaredFields()));
 
         if (!fieldNames.containsAll(params.keySet()))

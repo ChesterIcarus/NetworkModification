@@ -1,24 +1,27 @@
 package InMemoryMatsim.Model.Specification;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.IOError;
 import java.io.IOException;
 
 public class SpecificationParser extends Parser {
 
-    public static Specification createSpecification(String filepath){
+    public static Specification createSpecification(String filepath) throws IOError {
         Specification spec = new Specification();
         spec.path = filepath;
         try {
             spec.element = readSpecification(filepath);
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            throw new IOError(e);
         }
         getBaseElements(spec);
+        getSetupElements(spec);
         return spec;
     }
 
@@ -31,11 +34,12 @@ public class SpecificationParser extends Parser {
      * @throws IOException
      * @throws SAXException
      */
-    public static Element readSpecification(String filepath) throws ParserConfigurationException, IOException, SAXException {
+    private static Element readSpecification(String filepath) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setValidating(true);
         factory.setIgnoringElementContentWhitespace(true);
-        return factory.newDocumentBuilder().parse(new File(filepath)).getDocumentElement();
+        Document document = factory.newDocumentBuilder().parse(new File(filepath));
+        document.normalizeDocument();
+        return document.getDocumentElement();
     }
 
     private static void getBaseElements(Specification specification){
@@ -47,12 +51,10 @@ public class SpecificationParser extends Parser {
                 specification.element, "network").getAttribute("path");
         specification.events = getChild(
                 specification.element, "events").getAttribute("path");
-
-
     }
 
     private static void getSetupElements(Specification specification){
-        specification.setup = SetupParser.getSetupParams();
+        specification.setup = SetupParser.getSetup();
         specification.threads = ThreadsParser.getThreads(specification.element);
         specification.planParameters = PlanParametersParser.getPlanParameters(specification.element);
     }

@@ -1,7 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <model>
     <plans path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/plans/SWUS_Plans_FINAL.xml"/>
-    <network
-            path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/networks/SWUSFULLFINAL_NET.xml"/>
+    <network path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/networks/SWUSFULLFINAL_NET.xml"/>
     <config path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/scenarios/scenario_1a/SWUSFINAL_Config_Scenario1a.xml"/>
     <events path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/scenarios/scenario_1a/Disruption Inputs_Scenario1a.csv"/>
     <setup>
@@ -18,12 +18,14 @@
         <activities>
             <activity>
                 <type value="home"/>
+                <closingTime value="15.0"/>
             </activity>
             <activity>
                 <type value="work"/>
             </activity>
             <activity>
                 <type value="university"/>
+                <scoringThisActivityAtAll value="false"/>
             </activity>
             <activity>
                 <type value="school"/>
@@ -72,6 +74,10 @@
             </activity>
         </activities>
         <modes>
+            <mode>
+                <type value="car"/>
+                <constant value="1.2"/>
+            </mode>
             <mode>
                 <type value="sov"/>
             </mode>

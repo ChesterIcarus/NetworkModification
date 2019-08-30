@@ -14,4 +14,10 @@ public class Specification {
     public Setup setup;
     public Threads threads;
     public PlanParameters planParameters;
+
+    public static void main(String[] args){
+        SpecificationParser.createSpecification(
+                "/Users/austinmichne/Research/ChesterIcarus/NetworkModification/modelSpecifications.xml");
+        System.out.println("Testing");
+    }
 }
