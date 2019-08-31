@@ -1,6 +1,6 @@
-import InMemoryMatsim.MutableScenarioUtils;
-import InMemoryMatsim.IMConfigUtils;
-import InMemoryMatsim.IMNetworkUtils;
+import InMemMatsim.InMemScenarioUtils;
+import InMemMatsim.InMemConfigUtils;
+import InMemMatsim.InMemNetworkUtils;
 import org.matsim.api.core.v01.network.Network;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
@@ -32,15 +32,15 @@ public class CustomRunner {
         };
 
         Config config = ConfigUtils.createConfig();
-        IMConfigUtils.austinWrapperRunner(config, args[0]);
+        InMemConfigUtils.austinWrapperRunner(config, args[0]);
 
         Network network = NetworkUtils.createNetwork();
-        IMNetworkUtils.loadNetworkWithEvents(config, network, args[1], args[3]);
+        InMemNetworkUtils.loadNetworkWithEvents(config, network, args[1], args[3]);
 
-        MutableScenario scenario = MutableScenarioUtils.createScenario(config);
+        MutableScenario scenario = InMemScenarioUtils.createScenario(config);
 
         scenario.setNetwork(network);
-        MutableScenarioUtils.loadPopulationFromPlans(scenario, args[2]);
+        InMemScenarioUtils.loadPopulationFromPlans(scenario, args[2]);
 
         Controler controler = new Controler(scenario);
         controler.run();
