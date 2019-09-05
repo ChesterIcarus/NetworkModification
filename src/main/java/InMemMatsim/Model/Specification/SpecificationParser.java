@@ -16,7 +16,7 @@ import java.io.IOException;
 
 public class SpecificationParser extends Parser {
 
-    public static Specification loadSpecification(String filepath) throws IOError {
+    public static Specification loadSpecification(String filepath) throws IOError, IOException {
         Specification spec = new Specification();
         spec.path = filepath;
         try {
@@ -26,7 +26,20 @@ public class SpecificationParser extends Parser {
         }
         getBaseElements(spec);
         getSetupElements(spec);
+        validateAtomicPaths(spec);
         return spec;
+    }
+
+    public static void validateAtomicPaths(Specification specification) throws IOException {
+        String specDir = specification.path.substring(0, specification.path.lastIndexOf("/"));
+        String configDir = specification.config.substring(0, specification.config.lastIndexOf("/"));
+        String eventsDir = null;
+        if (!specDir.equalsIgnoreCase(configDir))
+            throw new IOException("Specification file and Config file are located in distinct directories");
+        if (specification.events != null)
+            eventsDir = specification.events.substring(0, specification.events.lastIndexOf("/"));
+            if (!specDir.equalsIgnoreCase(eventsDir))
+                throw new IOException("Specification file and Networks Events file are located in distinct directories");
     }
 
     /**

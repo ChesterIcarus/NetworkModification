@@ -6,7 +6,7 @@ import InMemMatsim.Model.Specification.PlanParameters.PlanParameters;
 import InMemMatsim.Model.Specification.GlobalParameters.GlobalParameters;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
-import org.matsim.core.controler.OutputDirectoryHierarchy;
+import org.matsim.core.controler.OutputDirectoryHierarchy.OverwriteFileSetting;
 
 public class InMemConfigUtils {
     private InMemConfigUtils() { }
@@ -17,7 +17,7 @@ public class InMemConfigUtils {
         config.network().setInputFile(null);
         config.network().setChangeEventsInputFile(null);
         config.plans().setInputFile(null);
-        setOverwriteFileSetting(config, OutputDirectoryHierarchy.OverwriteFileSetting.deleteDirectoryIfExists);
+        setOutputParams(config, OverwriteFileSetting.deleteDirectoryIfExists);
         return config;
     }
 
@@ -41,8 +41,10 @@ public class InMemConfigUtils {
     }
 
     @Deprecated
-    public static void setOverwriteFileSetting(
-            Config config, OutputDirectoryHierarchy.OverwriteFileSetting setting) {
+    public static void setOutputParams(Config config, OverwriteFileSetting setting) {
+        // TODO: This is a hhuge mess
         config.controler().setOverwriteFileSetting(setting);
+        String outDir = config.controler().getOutputDirectory().substring(2);
+        config.controler().setOutputDirectory("./output/" + outDir);
     }
 }
