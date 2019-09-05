@@ -4,21 +4,22 @@
     <network path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/networks/SWUSFULLFINAL_NET.xml"/>
     <config path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/scenarios/scenario_1a/SWUSFINAL_Config_Scenario1a.xml"/>
     <events path="/Users/austinmichne/Research/ChesterIcarus/NetworkModification/data/scenarios/scenario_1a/Disruption Inputs_Scenario1a.csv"/>
-    <setup>
-        <global>
-            <timeVariant value="true"/>
-            <scoringActs value="false"/>
-        </global>
+    <global>
+        <timeVariant value="true"/>
         <threads>
             <simulation value="6"/>
             <planning value="2"/>
         </threads>
-    </setup>
+    </global>
+    <controler>
+        <overwriteFileSetting value="deleteDirectoryIfExists"/>
+    </controler>
     <planParameters>
         <activities>
             <activity>
                 <type value="home"/>
                 <closingTime value="15.0"/>
+                <earliestEndTime value="4000.0"/>
             </activity>
             <activity>
                 <type value="work"/>

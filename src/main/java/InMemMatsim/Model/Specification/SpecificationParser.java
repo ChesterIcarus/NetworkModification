@@ -2,8 +2,8 @@ package InMemMatsim.Model.Specification;
 
 import InMemMatsim.Model.Specification.Core.Parser;
 import InMemMatsim.Model.Specification.PlanParameters.PlanParametersParser;
-import InMemMatsim.Model.Specification.Setup.SetupParser;
-import InMemMatsim.Model.Specification.Setup.Threads.ThreadsParser;
+import InMemMatsim.Model.Specification.GlobalParameters.GlobalParametersParser;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -16,7 +16,7 @@ import java.io.IOException;
 
 public class SpecificationParser extends Parser {
 
-    public static Specification createSpecification(String filepath) throws IOError {
+    public static Specification loadSpecification(String filepath) throws IOError {
         Specification spec = new Specification();
         spec.path = filepath;
         try {
@@ -58,8 +58,8 @@ public class SpecificationParser extends Parser {
     }
 
     private static void getSetupElements(Specification specification){
-        specification.setup = SetupParser.getSetup();
-        specification.threads = ThreadsParser.getThreads(specification.element);
+        specification.globalParameters = GlobalParametersParser.getGlobalParameters(specification.element);
+//        specification.threads = ThreadsParser.getThreads(specification.element);
         specification.planParameters = PlanParametersParser.getPlanParameters(specification.element);
     }
 }

@@ -4,10 +4,13 @@ import InMemMatsim.Model.Specification.Core.Parameters;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.groups.PlanCalcScoreConfigGroup;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 
 public class Mode extends Parameters {
-    public String type;
+    public String type = "null";
     public double constant = 0.0D;
     public double dailyMonetaryConstant = 0.0D;
     public double dailyUtilityConstant = 0.0D;
@@ -21,13 +24,7 @@ public class Mode extends Parameters {
     }
 
     public static void addModeToModeParams(Config config, Mode mode){
-        PlanCalcScoreConfigGroup.ModeParams params;
-        params = config.planCalcScore().getOrCreateModeParams(mode.type);
-        params.setConstant(mode.constant);
-        params.setDailyMonetaryConstant(mode.dailyMonetaryConstant);
-        params.setDailyUtilityConstant(mode.dailyUtilityConstant);
-        params.setMarginalUtilityOfDistance(mode.marginalUtilityOfDistance);
-        params.setMarginalUtilityOfTraveling(mode.marginalUtilityOfTraveling);
-        params.setMonetaryDistanceRate(mode.monetaryDistanceRate);
+        PlanCalcScoreConfigGroup.ModeParams params = new PlanCalcScoreConfigGroup.ModeParams(mode.type);
+        setMatsimParams(params, mode);
     }
 }

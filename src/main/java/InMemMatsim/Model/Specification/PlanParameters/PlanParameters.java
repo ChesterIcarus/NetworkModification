@@ -4,7 +4,9 @@ import InMemMatsim.Model.Specification.PlanParameters.Activities.Activities;
 import InMemMatsim.Model.Specification.PlanParameters.Modes.Modes;
 import InMemMatsim.Model.Specification.Core.Parameters;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class PlanParameters extends Parameters {
     public Modes modes;
@@ -14,12 +16,13 @@ public class PlanParameters extends Parameters {
 
     public PlanParameters(){
         super();
+        super.subclasses = Arrays.asList(Modes.class, Activities.class);
+        this.modes = new Modes();
+        this.activities = new Activities();
     };
 
     public PlanParameters(HashMap<String, ?> params){
-        super();
+        this();
         createParams(this, params);
-        this.modes = new Modes();
-        this.activities = new Activities();
     }
 }

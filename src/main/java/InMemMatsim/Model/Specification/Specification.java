@@ -1,8 +1,7 @@
 package InMemMatsim.Model.Specification;
 
 import InMemMatsim.Model.Specification.PlanParameters.PlanParameters;
-import InMemMatsim.Model.Specification.Setup.Setup;
-import InMemMatsim.Model.Specification.Setup.Threads.Threads;
+import InMemMatsim.Model.Specification.GlobalParameters.GlobalParameters;
 import org.w3c.dom.Element;
 
 public class Specification {
@@ -12,16 +11,13 @@ public class Specification {
     public String network;
     public String config;
     public String events;
-    public Setup setup;
-    public Threads threads;
+    public GlobalParameters globalParameters;
     public PlanParameters planParameters;
 
     public static void main(String[] args){
-        SpecificationParser.createSpecification(
-                "/Users/austinmichne/Research/ChesterIcarus/NetworkModification/modelSpecifications.xml");
-        System.out.println(SpecificationParser.createSpecification(
-                "/Users/austinmichne/Research/ChesterIcarus/NetworkModification/modelSpecifications.xml"));
+        String path = "/Users/austinmichne/Research/ChesterIcarus/NetworkModification/modelSpecifications.xml";
+        Specification specification = SpecificationParser.loadSpecification(path);
+        System.out.println();
 
-        System.out.println("Testing");
     }
 }

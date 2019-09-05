@@ -1,4 +1,4 @@
-package InMemMatsim.Model.Specification.Setup.Threads;
+package InMemMatsim.Model.Specification.GlobalParameters.Threads;
 
 import InMemMatsim.Model.Specification.Core.Parameters;
 import InMemMatsim.Model.Specification.Core.Parser;

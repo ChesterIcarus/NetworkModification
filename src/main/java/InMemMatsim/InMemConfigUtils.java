@@ -3,29 +3,26 @@ package InMemMatsim;
 import InMemMatsim.Model.Specification.PlanParameters.Activities.Activity.Activity;
 import InMemMatsim.Model.Specification.PlanParameters.Modes.Mode.Mode;
 import InMemMatsim.Model.Specification.PlanParameters.PlanParameters;
-import InMemMatsim.Model.Specification.PlanParameters.PlanParametersParser;
+import InMemMatsim.Model.Specification.GlobalParameters.GlobalParameters;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.controler.OutputDirectoryHierarchy;
 
 public class InMemConfigUtils {
-    private InMemConfigUtils() {};
+    private InMemConfigUtils() { }
 
-    public static Config createCleanConfig(Config config, String filepath, boolean timeVariant) {
+
+    public static Config createCleanConfig(Config config, String filepath) {
         config = ConfigUtils.loadConfig(filepath);
-        config.network().setInputFile("null");
-        config.network().setTimeVariantNetwork(timeVariant);
-        config.network().setChangeEventsInputFile("null");
-        config.plans().setInputFile("null");
+        config.network().setInputFile(null);
+        config.network().setChangeEventsInputFile(null);
+        config.plans().setInputFile(null);
+        setOverwriteFileSetting(config, OutputDirectoryHierarchy.OverwriteFileSetting.deleteDirectoryIfExists);
         return config;
     }
 
     public static Config createCleanConfig(String filepath) {
-        return createCleanConfig(ConfigUtils.createConfig(), filepath, false);
-    }
-
-    public static void createCleanConfig(Config config, String filepath) {
-        createCleanConfig(config, filepath, false);
+        return createCleanConfig(ConfigUtils.createConfig(), filepath);
     }
 
     public static void setPlanParams(Config config, PlanParameters planParameters) {
@@ -35,7 +32,17 @@ public class InMemConfigUtils {
             Activity.addActivityToActivityParams(config, activity);
     }
 
-    public static void setOverwriteFileSetting(Config config, OutputDirectoryHierarchy.OverwriteFileSetting setting) {
+    public static void setGlobal(Config config, GlobalParameters globalParameters){
+        config.global().setNumberOfThreads(globalParameters.threads.planning);
+        // TODO: Fix the Threads class - it shouldn't even exist
+        // TODO: Create a network class as well
+        config.qsim().setNumberOfThreads(globalParameters.threads.simulation);
+        config.network().setTimeVariantNetwork(globalParameters.timeVariant);
+    }
+
+    @Deprecated
+    public static void setOverwriteFileSetting(
+            Config config, OutputDirectoryHierarchy.OverwriteFileSetting setting) {
         config.controler().setOverwriteFileSetting(setting);
     }
 }

@@ -20,4 +20,5 @@ deploy/data/
 deploy/wrapper/
 target/
 output/
-
+output*/
+outputSWUSScenario1a

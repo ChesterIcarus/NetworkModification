@@ -11,10 +11,17 @@ import java.util.List;
 public class InMemNetworkUtils {
     private InMemNetworkUtils(){};
 
-    public static void loadNetworkWithEvents(Config config, Network network, String networkPath, String csvEvents){
+    public static Network loadNetwork(Config config, Network network, String networkPath){
+        network = NetworkUtils.createNetwork(config);
+        NetworkUtils.readNetwork(network, networkPath);
+        return network;
+    }
+
+    public static Network loadNetworkWithEvents(Config config, Network network, String networkPath, String csvEvents){
         network = NetworkUtils.createNetwork(config);
         NetworkUtils.readNetwork(network, networkPath);
         InMemNetworkUtils.setNetworkEvents(network, csvEvents);
+        return network;
     }
 
     public static void setNetworkEvents(Network network, String csvEvents){

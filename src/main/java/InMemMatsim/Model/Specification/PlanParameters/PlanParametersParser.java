@@ -1,5 +1,6 @@
 package InMemMatsim.Model.Specification.PlanParameters;
 
+import InMemMatsim.Model.Specification.Core.MetaParser;
 import InMemMatsim.Model.Specification.PlanParameters.Activities.Activities;
 import InMemMatsim.Model.Specification.PlanParameters.Modes.Modes;
 import InMemMatsim.Model.Specification.Core.Parameters;
@@ -24,18 +25,17 @@ public class PlanParametersParser extends Parser {
         for (String field : fieldNames)
             params.put(field, getChild(element, field).getAttribute("value"));;
         PlanParameters planParameters = new PlanParameters(params);
-        for (Field field : planParameters.getClass().getDeclaredFields()){
-            if ((!field.getType().equals(String.class)) &&
-                    (parseSubclasses.contains(field.getType()))){
-                try {
-                    field.set(planParameters, field.getType().getDeclaredMethod(
-                            "parse", Element.class).invoke(null, element));
-                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                    e.printStackTrace();
-                    throw new InstantiationError();
-                }
-            }
-        }
+        MetaParser.parseDescendant(planParameters, element);
+
+//
+//        for (Field field : planParameters.getClass().getDeclaredFields())
+//            if (!Arrays.asList(fieldNames).contains(field.getName()))
+//                if (parseSubclasses.contains(field.getType())) try {
+//                    field.set(planParameters, field.getType().getDeclaredMethod(
+//                            "parse", Element.class).invoke(null, element));
+//                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+//                    e.printStackTrace();
+//                    throw new InstantiationError(); }
         return planParameters;
     }
 }
