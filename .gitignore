@@ -15,9 +15,7 @@
 log/
 target/
 
-data/*
-deploy/*
+data/
+deploy/
 target/
 output/
-output*/
-outputSWUSScenario1a
