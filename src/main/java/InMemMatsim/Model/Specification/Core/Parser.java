@@ -5,9 +5,21 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Parser {
+
+    public static HashMap<String, String> getParameters(Element element, Class parseClass, String attribute){
+        HashMap<String, String> params = new HashMap<>();
+        for (String field : Parameters.getPrimitiveFieldNames(parseClass.getDeclaredFields()))
+            params.put(field, getChild(element, field).getAttribute(attribute));
+        return params;
+    }
+
+    public static HashMap<String, String> getParameters(Element element, Class parseClass){
+        return getParameters(element, parseClass, "value");
+    }
 
     public static Element getChild(Element element, String childName){
         NodeList nodes = element.getElementsByTagName(childName);

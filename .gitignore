@@ -16,8 +16,7 @@ log/
 target/
 
 data/*
-deploy/data/
-deploy/wrapper/
+deploy/*
 target/
 output/
 output*/

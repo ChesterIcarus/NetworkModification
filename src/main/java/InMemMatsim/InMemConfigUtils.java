@@ -14,6 +14,7 @@ public class InMemConfigUtils {
 
     public static Config createCleanConfig(Config config, String filepath) {
         config = ConfigUtils.loadConfig(filepath);
+        config.network().setTimeVariantNetwork(true);
         config.network().setInputFile(null);
         config.network().setChangeEventsInputFile(null);
         config.plans().setInputFile(null);
@@ -32,12 +33,12 @@ public class InMemConfigUtils {
             Activity.addActivityToActivityParams(config, activity);
     }
 
+    @Deprecated
     public static void setGlobal(Config config, GlobalParameters globalParameters){
-        config.global().setNumberOfThreads(globalParameters.threads.planning);
         // TODO: Fix the Threads class - it shouldn't even exist
         // TODO: Create a network class as well
-        config.qsim().setNumberOfThreads(globalParameters.threads.simulation);
-        config.network().setTimeVariantNetwork(globalParameters.timeVariant);
+        config.global().setNumberOfThreads(6);
+        config.qsim().setNumberOfThreads(8);
     }
 
     @Deprecated

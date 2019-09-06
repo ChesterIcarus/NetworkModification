@@ -26,11 +26,12 @@ public class SpecificationParser extends Parser {
         }
         getBaseElements(spec);
         getSetupElements(spec);
-        validateAtomicPaths(spec);
+//        validateAtomicPaths(spec);
         return spec;
     }
 
     public static void validateAtomicPaths(Specification specification) throws IOException {
+        // TODO : Debug this method
         String specDir = specification.path.substring(0, specification.path.lastIndexOf("/"));
         String configDir = specification.config.substring(0, specification.config.lastIndexOf("/"));
         String eventsDir = null;

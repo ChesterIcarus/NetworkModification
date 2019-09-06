@@ -1,7 +1,6 @@
 package InMemMatsim.MetaModel;
 
 import InMemMatsim.Model.Model;
-import InMemMatsim.Model.ModelUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -62,11 +61,13 @@ public class MetaModelUtils {
         String specFile = null;
 
         for (String file : files){
-            if (ignoreCase){
-                file = file.toLowerCase();
-                indicator = indicator.toLowerCase();
-            }
-            if (file.contains(indicator)) {
+            String tmpFile;
+            String tmpIndicator;
+
+            if (ignoreCase) { tmpFile = file.toLowerCase();tmpIndicator = indicator.toLowerCase(); }
+            else { tmpFile = file;tmpIndicator = indicator; }
+
+            if (tmpFile.contains(tmpIndicator)) {
                 if (specFile == null)
                     specFile = file;
                 else

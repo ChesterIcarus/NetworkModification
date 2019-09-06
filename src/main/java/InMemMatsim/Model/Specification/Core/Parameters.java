@@ -1,13 +1,8 @@
 package InMemMatsim.Model.Specification.Core;
 
-
-import org.matsim.core.config.ReflectiveConfigGroup;
-import org.matsim.core.config.groups.PlanCalcScoreConfigGroup;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.util.*;
 
 public class Parameters {
@@ -27,8 +22,17 @@ public class Parameters {
         List<String> names = new ArrayList<>();
         for (Field field : fields) {
             if (field.getType() == String.class || field.getType() == boolean.class ||
-                    field.getType() == int.class || field.getType() == double.class ||
-                    field.getType() == List.class) {
+                    field.getType() == int.class || field.getType() == double.class) {
+                names.add(field.getName());
+            }
+        }
+        return names.toArray(new String[0]);
+    }
+
+    public static String[] getListFieldNames(Field[] fields) {
+        List<String> names = new ArrayList<>();
+        for (Field field : fields) {
+            if (field.getType() == List.class || field.getType() == ArrayList.class){
                 names.add(field.getName());
             }
         }
@@ -36,13 +40,21 @@ public class Parameters {
     }
 
     public static Field[] getPrimitiveFields(Field[] fields) {
+        List<Class> classes = Arrays.asList(String.class,
+                boolean.class, int.class, float.class, double.class, long.class);
+        return getFieldsByClass(fields, classes);
+    }
+
+    public static Field[] getListFields(Field[] fields) {
+        List<Class> classes = Arrays.asList(List.class, ArrayList.class);
+        return getFieldsByClass(fields, classes);
+    }
+
+    public static Field[] getFieldsByClass(Field[] fields, List<Class> classes){
         List<Field> fieldList = new ArrayList<>();
-        for (Field field : fields) {
-            if (field.getType() == String.class || field.getType() == boolean.class ||
-                    field.getType() == int.class || field.getType() == double.class) {
+        for (Field field : fields)
+            if (classes.contains(field.getType()))
                 fieldList.add(field);
-            }
-        }
         return fieldList.toArray(new Field[0]);
     }
 

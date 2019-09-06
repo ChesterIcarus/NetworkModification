@@ -12,7 +12,6 @@ public class PlanParameters extends Parameters {
     public Modes modes;
     public Activities activities;
     // TODO: Add PlanScoring module to parser
-//    public PlanScoring planScoring;
 
     public PlanParameters(){
         super();
