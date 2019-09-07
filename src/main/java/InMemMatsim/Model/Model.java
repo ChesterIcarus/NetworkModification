@@ -1,6 +1,8 @@
 package InMemMatsim.Model;
 
 import InMemMatsim.InMemScenarioUtils;
+import InMemMatsim.Model.Specification.PlanParameters.Activities.Activity.Activity;
+import InMemMatsim.Model.Specification.PlanParameters.Modes.Mode.Mode;
 import InMemMatsim.Model.Specification.Specification;
 import org.matsim.api.core.v01.network.Network;
 import org.matsim.core.config.Config;
@@ -49,7 +51,6 @@ public class Model {
 
     private void loadScenarioFromSpec(Specification specification){
         initConfig(specification);
-        initGlobalParams(specification);
         initPlanParams(specification);
         initNetwork(specification);
         initNetworkEvents(specification);
@@ -60,12 +61,11 @@ public class Model {
         this.config = createCleanConfig(specification.config);
     }
 
-    private void initGlobalParams(Specification specification){
-        setGlobal(this.config, specification.globalParameters);
-    }
-
     private void initPlanParams(Specification specification){
-        setPlanParams(this.config, specification.planParameters);
+        for (Mode mode : specification.planParameters.modes.modes)
+            Mode.toMatsim(config, mode);
+        for (Activity activity : specification.planParameters.activities.activities)
+            Activity.toMatsim(config, activity);
     }
 
 

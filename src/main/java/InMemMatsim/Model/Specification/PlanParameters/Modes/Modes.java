@@ -1,26 +1,41 @@
 package InMemMatsim.Model.Specification.PlanParameters.Modes;
 
+import InMemMatsim.Model.Specification.Core.Parser;
+import InMemMatsim.Model.Specification.PlanParameters.Activities.Activity.Activity;
 import InMemMatsim.Model.Specification.PlanParameters.Modes.Mode.Mode;
-import InMemMatsim.Model.Specification.Core.Parameters;
+import InMemMatsim.Model.Specification.Core.Parameter;
+import org.matsim.core.config.Config;
 import org.w3c.dom.Element;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Modes extends Parameters {
-    public static final Class subclass = Mode.class;
+import static InMemMatsim.Model.Specification.Core.Parser.getChildren;
+import static InMemMatsim.Model.Specification.Core.Parser.getClassName;
+
+public class Modes extends Parameter<Modes> {
+    public static final Class DESCENDANT = Mode.class;
 
     public List<Mode> modes;
 
-    public Modes(){};
-
-    public Modes(HashMap<String, ?> params, List<Mode> modeList){
+    public Modes(){
         super();
-        createParams(this, params);
-        this.modes = modeList;
+        this.modes = new ArrayList<>();
     }
 
-    public static Modes parse(Element element){
-        return ModesParser.getModes(element);
+    public Modes(Element element){
+        this();
+        populate(this, Parser.getParameters(element, this.getClass()));
+        for (Element childActivity : getChildren(element, getClassName(DESCENDANT)))
+            this.modes.add(new Mode(childActivity));
     }
+
+    @Override
+    public void toMatsim(Config config, Modes modes) {
+
+    }
+
+
+
 }

@@ -1,20 +1,19 @@
 package InMemMatsim.Model.Specification;
 
-import InMemMatsim.Model.Specification.PlanParameters.PlanParameters;
-import InMemMatsim.Model.Specification.GlobalParameters.GlobalParameters;
+import InMemMatsim.Model.Specification.PlanParameters.PlanParameter;
+import org.matsim.core.config.Config;
 import org.w3c.dom.Element;
 
 import java.io.IOException;
 
 public class Specification {
-    public String path;
-    public Element element;
-    public String plans;
-    public String network;
-    public String config;
-    public String events;
-    public GlobalParameters globalParameters;
-    public PlanParameters planParameters;
+    public String path = null;
+    public Element element = null;
+    public String plans = null;
+    public String network = null;
+    public String config = null;
+    public String events = null;
+    public PlanParameter planParameters = new PlanParameter();
 
     @Deprecated
     public static void main(String[] args){
@@ -25,6 +24,10 @@ public class Specification {
             e.printStackTrace();
         }
         System.out.println();
+
+    }
+
+    public static void toMatsim(Config config, Specification specification){
 
     }
 }

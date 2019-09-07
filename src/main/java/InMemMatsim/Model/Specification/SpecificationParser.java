@@ -1,8 +1,6 @@
 package InMemMatsim.Model.Specification;
 
 import InMemMatsim.Model.Specification.Core.Parser;
-import InMemMatsim.Model.Specification.PlanParameters.PlanParametersParser;
-import InMemMatsim.Model.Specification.GlobalParameters.GlobalParametersParser;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -72,8 +70,8 @@ public class SpecificationParser extends Parser {
     }
 
     private static void getSetupElements(Specification specification){
-        specification.globalParameters = GlobalParametersParser.getGlobalParameters(specification.element);
+//        specification.globalParameters = GlobalParametersParser.getGlobalParameters(specification.element);
 //        specification.threads = ThreadsParser.getThreads(specification.element);
-        specification.planParameters = PlanParametersParser.getPlanParameters(specification.element);
+//        specification.planParameters = PlanParametersParser.getPlanParameters(specification.element);
     }
 }

@@ -1,13 +1,13 @@
 package InMemMatsim.Model.Specification.QSimParameters;
 
-import InMemMatsim.Model.Specification.Core.Parameters;
+import InMemMatsim.Model.Specification.Core.Parameter;
+import org.matsim.core.config.Config;
 import org.matsim.core.config.groups.QSimConfigGroup;
-import org.matsim.core.utils.misc.Time;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-public class QSimParameters extends Parameters {
+public class QSimParameter extends Parameter<QSimParameter> {
     public double startTime = 0.0D;
     public double endTime = 0.0D;
     public double timeStepSize = 1.0D;
@@ -38,8 +38,14 @@ public class QSimParameters extends Parameters {
     public QSimConfigGroup.SnapshotStyle snapshotStyle = QSimConfigGroup.SnapshotStyle.equiDist;
     public QSimConfigGroup.LinkDynamics linkDynamics = QSimConfigGroup.LinkDynamics.FIFO;
 
-    QSimParameters(){
+    QSimParameter(){
         super();
-        // TODO: Finish this. Standard parsing for primitives, fall back on MATsim *.valueOf funcs for QSimConfigGroup.*
+        /* TODO: Finish this. Standard parsing for primitives, fall back on MATsim *.valueOf funcs for QSimConfigGroup.**/
+//        QSimConfigGroup.class.getDeclaredFields()
+    }
+
+    @Override
+    public void toMatsim(Config config, QSimParameter qSimParameter) {
+
     }
 }

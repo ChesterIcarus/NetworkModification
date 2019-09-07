@@ -4,7 +4,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,13 +15,30 @@ public class Parser {
 
     public static HashMap<String, String> getParameters(Element element, Class parseClass, String attribute){
         HashMap<String, String> params = new HashMap<>();
-        for (String field : Parameters.getPrimitiveFieldNames(parseClass.getDeclaredFields()))
+        for (String field : Parameter.getPrimitiveFieldNames(parseClass.getDeclaredFields()))
             params.put(field, getChild(element, field).getAttribute(attribute));
         return params;
     }
 
     public static HashMap<String, String> getParameters(Element element, Class parseClass){
         return getParameters(element, parseClass, "value");
+    }
+
+    public static void getDescendant(Parameter param, Element element){
+        String[] fieldNames = Parameter.getPrimitiveFieldNames(param.getClass().getDeclaredFields());
+        for (Field field : param.getClass().getDeclaredFields()) {
+            if (!Arrays.asList(fieldNames).contains(field.getName())) {
+                if (param.DESCENDANT == field.getType()) {
+                    try {
+                        field.set(param, field.getType().getDeclaredMethod("parse", Element.class).invoke(null, element));
+                    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                        // TODO: Fix this up a bit
+                        e.printStackTrace();
+                        System.exit(1);
+                    }
+                }
+            }
+        }
     }
 
     public static Element getChild(Element element, String childName){
