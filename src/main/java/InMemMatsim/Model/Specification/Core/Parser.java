@@ -13,10 +13,28 @@ import java.util.List;
 
 public class Parser {
 
+    public static Element getParameterElement(Element element, String parameter) throws InstantiationException {
+        NodeList nodeList = element.getElementsByTagName(parameter);
+        if (nodeList.getLength() == 1){
+            return (Element) nodeList.item(0);
+        }
+        if (nodeList.getLength() == 0){
+            return element;
+        }
+        else {
+            throw new InstantiationException("The specification contains multiple tags with the name " +
+                    parameter + "\nThis is not permitted and must be fixed.");
+        }
+    }
+
     public static HashMap<String, String> getParameters(Element element, Class parseClass, String attribute){
         HashMap<String, String> params = new HashMap<>();
-        for (String field : Parameter.getPrimitiveFieldNames(parseClass.getDeclaredFields()))
-            params.put(field, getChild(element, field).getAttribute(attribute));
+        for (String field : Parameter.getPrimitiveFieldNames(parseClass.getDeclaredFields())) {
+            Node node = getChild(element, field);
+            if (node != null)
+                params.put(field, getChild(element, field).getAttribute(attribute));
+        }
+
         return params;
     }
 
@@ -24,6 +42,7 @@ public class Parser {
         return getParameters(element, parseClass, "value");
     }
 
+    @Deprecated
     public static void getDescendant(Parameter param, Element element){
         String[] fieldNames = Parameter.getPrimitiveFieldNames(param.getClass().getDeclaredFields());
         for (Field field : param.getClass().getDeclaredFields()) {

@@ -1,29 +1,38 @@
 package InMemMatsim.Model.Specification.Core;
 
+import com.google.common.collect.ImmutableMap;
 import org.matsim.core.config.Config;
-import org.w3c.dom.Element;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
-public abstract class Parameter<Subclass> {
+public abstract class Parameter {
+    // Primitive types defined for use in deciding how to treat parameters
     private static final List<Class> PRIMITIVE_TYPES = Arrays.asList(
-            String.class, Boolean.class,
-            Integer.class, Long.class,
-            Float.class, Double.class);
+            String.class, boolean.class,
+            int.class, long.class,
+            float.class, double.class);
+
+    // Used to access the correct "valueOf" methods based on input data type
+    private static ImmutableMap<Class, Method> VALUEOF_METHODS;
+    static { try {
+            VALUEOF_METHODS = ImmutableMap.of(
+                    boolean.class, Boolean.class.getMethod("valueOf", String.class),
+                    int.class, Integer.class.getMethod("valueOf", String.class),
+                    long.class, Long.class.getMethod("valueOf", String.class),
+                    float.class, Float.class.getMethod("valueOf", String.class),
+                    double.class, Double.class.getMethod("valueOf", String.class));
+    } catch (NoSuchMethodException e) { e.printStackTrace(); } }
 
     private static final List<Class> LIST_TYPES = Arrays.asList(
             List.class, ArrayList.class, Collection.class);
+
     protected Class DESCENDANT;
+    public Parameter() { }
 
-    public Parameter() {
-        this.DESCENDANT = null;
-    }
-
-    public abstract void toMatsim(Config config, Subclass subclass);
+    public abstract void toMatsim(Config config);
 
 
     public static void populate(Object object, Map<String, String> params) {
@@ -35,12 +44,6 @@ public abstract class Parameter<Subclass> {
         return getFieldNamesByClass(fields, PRIMITIVE_TYPES);
     }
 
-    // TODO: Evaluate using this vs subclasses
-    public static String[] getListFieldNames(Field[] fields) {
-        return getFieldNamesByClass(fields, LIST_TYPES);
-    }
-
-
     public static String[] getFieldNamesByClass(Field[] fields, List<Class> classes) {
         List<String> names = new ArrayList<>();
         for (Field field : fields)
@@ -50,10 +53,6 @@ public abstract class Parameter<Subclass> {
     }
 
     public static Field[] getPrimitiveFields(Field[] fields) {
-        return getFieldsByClass(fields, PRIMITIVE_TYPES);
-    }
-
-    public static Field[] getListFields(Field[] fields) {
         return getFieldsByClass(fields, PRIMITIVE_TYPES);
     }
 
@@ -72,10 +71,14 @@ public abstract class Parameter<Subclass> {
             try {
                 Field field = object.getClass().getDeclaredField(key);
                 if (PRIMITIVE_TYPES.contains(field.getType())){
-                    field.set(object, field.getType().getDeclaredMethod(
-                            "valueOf", String.class).invoke(null, params.get(key)));
+                    if (field.getType() == String.class){
+                        field.set(object, params.get(key));
+                    }
+                    else {
+                        field.set(object, VALUEOF_METHODS.get(field.getType()).invoke(null, params.get(key)));
+                    }
                 }
-            } catch (IllegalAccessException | NoSuchFieldException | NoSuchMethodException | InvocationTargetException e) {
+            } catch (IllegalAccessException | NoSuchFieldException | InvocationTargetException e) {
                 // TODO: Change this error to exception, and bubble up
                 e.printStackTrace();
                 System.exit(1);

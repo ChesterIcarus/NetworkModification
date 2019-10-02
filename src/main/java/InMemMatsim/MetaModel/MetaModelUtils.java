@@ -1,6 +1,7 @@
 package InMemMatsim.MetaModel;
 
 import InMemMatsim.Model.Model;
+import InMemMatsim.Model.Specification.Specification;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,7 +18,7 @@ public class MetaModelUtils {
     public static List<Model> createModels(String directory) throws IOException {
         List<Model> models = new ArrayList<>();
         for (String childDir : getChildDirs(directory)){
-            models.add(new Model(getSpecificationFile(childDir)));
+            models.add(new Model(new Specification(getSpecificationFile(childDir))));
         }
         return models;
     }

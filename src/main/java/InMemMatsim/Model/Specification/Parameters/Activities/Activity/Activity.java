@@ -1,4 +1,4 @@
-package InMemMatsim.Model.Specification.PlanParameters.Activities.Activity;
+package InMemMatsim.Model.Specification.Parameters.Activities.Activity;
 
 import InMemMatsim.Model.Specification.Core.Parameter;
 import InMemMatsim.Model.Specification.Core.Parser;
@@ -6,10 +6,12 @@ import org.matsim.core.config.Config;
 import org.matsim.core.config.groups.PlanCalcScoreConfigGroup;
 import org.w3c.dom.Element;
 
-public class Activity extends Parameter<Activity> {
+import static InMemMatsim.Model.Specification.Core.Parser.getChild;
+
+public class Activity extends Parameter {
     private static final Class MATSIM_CLASS = PlanCalcScoreConfigGroup.ActivityParams.class;
 
-    public String type = "null";
+    public String type = "default";
     public boolean scoringThisActivityAtAll = true;
     public double closingTime = 86400.0D;
     public double earliestEndTime = 0.0D;
@@ -24,9 +26,9 @@ public class Activity extends Parameter<Activity> {
         populate(this, Parser.getParameters(element, this.getClass()));
     }
 
-    public void toMatsim(Config config, Activity activity) {
-        PlanCalcScoreConfigGroup.ActivityParams params = new PlanCalcScoreConfigGroup.ActivityParams(activity.type);
-        setMatsimParams(params, activity);
+    public void toMatsim(Config config) {
+        PlanCalcScoreConfigGroup.ActivityParams params = new PlanCalcScoreConfigGroup.ActivityParams(type);
+        setMatsimParams(params, this);
         config.planCalcScore().addActivityParams(params);
     }
 }

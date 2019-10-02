@@ -1,13 +1,18 @@
-package InMemMatsim.Model.Specification.QSimParameters;
+package InMemMatsim.Model.Specification.Parameters;
 
 import InMemMatsim.Model.Specification.Core.Parameter;
+import InMemMatsim.Model.Specification.Core.Parser;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.groups.QSimConfigGroup;
+import org.w3c.dom.Element;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-public class QSimParameter extends Parameter<QSimParameter> {
+import static InMemMatsim.Model.Specification.Core.Parser.getChild;
+import static InMemMatsim.Model.Specification.Core.Parser.getParameterElement;
+
+public class QSimParameters extends Parameter {
     public double startTime = 0.0D;
     public double endTime = 0.0D;
     public double timeStepSize = 1.0D;
@@ -21,7 +26,6 @@ public class QSimParameter extends Parameter<QSimParameter> {
     public int numberOfThreads = 1;
 
     public double nodeOffset = 0.0D;
-    public float linkWidth = 30.0F;
     public boolean insertingWaitingVehiclesBeforeDrivingVehicles = true;
     public boolean usingThreadpool = true;
     public boolean useLanes = false;
@@ -38,14 +42,35 @@ public class QSimParameter extends Parameter<QSimParameter> {
     public QSimConfigGroup.SnapshotStyle snapshotStyle = QSimConfigGroup.SnapshotStyle.equiDist;
     public QSimConfigGroup.LinkDynamics linkDynamics = QSimConfigGroup.LinkDynamics.FIFO;
 
-    QSimParameter(){
+    public QSimParameters(Element element){
         super();
         /* TODO: Finish this. Standard parsing for primitives, fall back on MATsim *.valueOf funcs for QSimConfigGroup.**/
-//        QSimConfigGroup.class.getDeclaredFields()
+            populate(this,
+                    Parser.getParameters(getChild(element, "qsim"), this.getClass()));
+
+//        catch (InstantiationException e){
+//            e.printStackTrace();
+//            System.exit(1);
+//        }
+        System.out.println("Test");
     }
 
-    @Override
-    public void toMatsim(Config config, QSimParameter qSimParameter) {
-
+    public void toMatsim(Config config) {
+        config.qsim().setStartTime(startTime);
+        config.qsim().setEndTime(endTime);
+        config.qsim().setTimeStepSize(timeStepSize);
+        config.qsim().setSnapshotPeriod(snapshotPeriod);
+        config.qsim().setFlowCapFactor(flowCapFactor);
+        config.qsim().setStorageCapFactor(storageCapFactor);
+        config.qsim().setStuckTime(stuckTime);
+        config.qsim().setRemoveStuckVehicles(removeStuckVehicles);
+        config.qsim().setUsePersonIdForMissingVehicleId(usePersonIdForMissingVehicleId);
+        config.qsim().setNumberOfThreads(numberOfThreads);
+        config.qsim().setNodeOffset(nodeOffset);
+        config.qsim().setInsertingWaitingVehiclesBeforeDrivingVehicles(insertingWaitingVehiclesBeforeDrivingVehicles);
+        config.qsim().setUsingThreadpool(usingThreadpool);
+        config.qsim().setUseLanes(useLanes);
+        config.qsim().setUsingFastCapacityUpdate(usingFastCapacityUpdate);
+        config.qsim().setSeepModeStorageFree(isSeepModeStorageFree);
     }
 }
